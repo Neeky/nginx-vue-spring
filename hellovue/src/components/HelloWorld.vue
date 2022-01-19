@@ -14,7 +14,7 @@ export default {
   },
   methods:{
     queryServerSideCurrentTime() {
-      axios.get("/apis")
+      axios.get("/apis/current-time")
       .then(response => {
           alert(`服务端的当前时间是 ${response.data.now}`);
         })

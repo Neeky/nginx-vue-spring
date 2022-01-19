@@ -115,7 +115,7 @@ ps -ef | grep java
 root       2100      1  0 17:27 ?        00:00:21 java -jar hellospring-0.0.1-SNAPSHOT.jar
 
 # 检查 http 返回的内容
-curl http://127.0.0.1:8080
+curl http://127.0.0.1:8080/current-time
 {"now":"2022-01-19 23:57:35"}
 
 ```
@@ -141,7 +141,7 @@ http {
         listen       80;
         server_name  centos7;
 
-        location /apis {
+        location /apis/ {
                 proxy_pass http://127.0.0.1:8080/;
         }
 
@@ -166,7 +166,7 @@ http {
 ```
 7.1 检查
 ```bash
-curl http://127.0.0.1:80/apis
+curl http://127.0.0.1:80/apis/current-time
 {"now":"2022-01-19 23:58:35"}
 ```
 好了，现在看能正常的代理到后端服务了。

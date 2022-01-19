@@ -14,7 +14,7 @@ import java.util.Map;
 @SpringBootApplication
 public class HellospringApplication {
 
-    @RequestMapping("/")
+    @RequestMapping("/current-time")
     private Map currentTime() {
         Map<String,String> map = new HashMap<>();
         Date currentTime = new Date();
