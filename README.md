@@ -116,7 +116,7 @@ root       2100      1  0 17:27 ?        00:00:21 java -jar hellospring-0.0.1-SN
 
 # 检查 http 返回的内容
 curl http://127.0.0.1:8080
-hello-spring.
+{"now":"2022-01-19 23:57:35"}
 
 ```
 
@@ -167,8 +167,50 @@ http {
 7.1 检查
 ```bash
 curl http://127.0.0.1:80/apis
-hello-spring.
+{"now":"2022-01-19 23:58:35"}
 ```
 好了，现在看能正常的代理到后端服务了。
 
 ---
+
+## 第八步 编译vue代码
+8.1 编译
+```bash
+npm run build
+
+> hellovue@0.1.0 build
+> vue-cli-service build
+
+
+⠦  Building for production...
+
+ DONE  Compiled successfully in 3490ms                              上午11:59:09
+
+  File                                 Size               Gzipped
+
+  dist/js/chunk-vendors.ae02e612.js    114.93 KiB         40.81 KiB
+  dist/js/app.914e12f4.js              2.70 KiB           1.34 KiB
+  dist/css/app.a136f93c.css            0.40 KiB           0.29 KiB
+
+  Images and other types of assets omitted.
+
+ DONE  Build complete. The dist directory is ready to be deployed.
+ INFO  Check out deployment instructions at https://cli.vuejs.org/guide/deployment.html
+
+# 编译完成之后会生成一个 dist 
+```
+8.2 复制文件到 nginx 
+```bash
+cd dist/
+cp -a ./* /usr/local/nginx/html/
+```
+
+---
+
+## 从浏览器中检查
+
+![](img/v-001.jpg)
+
+---
+
+
