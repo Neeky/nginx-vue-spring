@@ -213,4 +213,100 @@ cp -a ./* /usr/local/nginx/html/
 
 ---
 
+## 高级配置 一 配置 nginx 服务 
+配置文件位于 `/usr/lib/systemd/system/nginx.service` 。
+```ini
+[Unit]
+Description=The NGINX HTTP and reverse proxy server
+After=syslog.target network.target remote-fs.target nss-lookup.target
 
+[Service]
+Type=forking
+User=root
+Group=root
+ExecStartPre=/usr/local/nginx/sbin/nginx -t
+ExecStart=/usr/local/nginx/sbin/nginx
+ExecReload=/usr/local/nginx/sbin/nginx -s reload
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+启动服务 
+```bash
+# 启动服务
+systemctl start nginx
+
+# 检查进程在不在
+ps -ef | grep nginx
+root       1834      1  0 15:24 ?        00:00:00 nginx: master process /usr/local/nginx/sbin/nginx
+nginx      1835   1834  0 15:24 ?        00:00:00 nginx: worker process
+nginx      1836   1834  0 15:24 ?        00:00:00 nginx: worker process
+nginx      1837   1834  0 15:24 ?        00:00:00 nginx: worker process
+nginx      1838   1834  0 15:24 ?        00:00:00 nginx: worker process
+nginx      1839   1834  0 15:24 ?        00:00:00 nginx: worker process
+nginx      1840   1834  0 15:24 ?        00:00:00 nginx: worker process
+nginx      1841   1834  0 15:24 ?        00:00:00 nginx: worker process
+nginx      1842   1834  0 15:24 ?        00:00:00 nginx: worker process
+```
+
+---
+
+## 高级配置 二 配置 spring 为服务 
+1.添加用户和依赖
+```bash
+# 添加 spring 用户
+useradd spring
+
+# 创建目录用户保存 hellospring 项目的 jar 包
+mkdir /usr/local/hellospring
+
+# 移动 jar 包到目标路径
+mv hellospring-0.0.1-SNAPSHOT.jar /usr/local/hellospring/
+
+# 更新权限
+chown -R spring:spring /usr/local/hellospring
+chmod 755 /usr/local/hellospring/hellospring-0.0.1-SNAPSHOT.jar
+```
+2.增加服务配置
+```ini
+[Unit]
+Description=hellospring project 
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+User=spring
+Group=spring
+ExecStart=/usr/local/hellospring/hellospring-0.0.1-SNAPSHOT.jar
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+
+```
+3.启动
+```bash
+# 启动
+systemctl start hellospring
+
+# 检查
+ps -ef | grep spring
+spring     2196      1 95 15:42 ?        00:00:04 /usr/local/TencentKona-8.0.8-312/bin/java -jar /usr/local/hellospring/hellospring-0.0.1-SNAPSHOT.jar
+root       2216   1760  0 15:42 pts/0    00:00:00 grep --color=auto spring
+
+```
+
+---
+
+## 可选配置开机启动
+```bash
+systemctl enable hellospring
+
+systemctl enable nginx
+
+```
+
+---
