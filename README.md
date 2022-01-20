@@ -41,7 +41,7 @@ cd nginx-1.18.0/
 # 配置
 cd /usr/local/
 ln -s nginx-1.18.0 nginx
-echo 'export PATH=/usr/local/nginx/sbin:$PATH\n' >> /etc/profile
+echo 'export PATH=/usr/local/nginx/sbin:$PATH' >> /etc/profile
 source /etc/profile
 
 # 用 nginx 用户运行 nginx 进程
@@ -58,8 +58,8 @@ chown -R nginx:nginx /usr/local/nginx-1.18.0
 cd /tmp/
 wget https://github.com/Tencent/TencentKona-8/releases/download/8.0.8-GA/TencentKona8.0.8.b1_jdk_linux-x86_64_8u312.tar.gz
 tar -xvf TencentKona8.0.8.b1_jdk_linux-x86_64_8u312.tar.gz -C /usr/local/
-echo 'export JAVA_HOME=/usr/local/TencentKona-8.0.8-312/\n' >> /etc/profile
-echo 'export PATH=/usr/local/TencentKona-8.0.8-312/bin/:$PATH\n' >> /etc/profile
+echo 'export JAVA_HOME=/usr/local/TencentKona-8.0.8-312/' >> /etc/profile
+echo 'export PATH=/usr/local/TencentKona-8.0.8-312/bin/:$PATH' >> /etc/profile
 ```
 ---
 
