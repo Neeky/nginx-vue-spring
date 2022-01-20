@@ -284,7 +284,7 @@ After=syslog.target network.target remote-fs.target nss-lookup.target
 [Service]
 User=spring
 Group=spring
-ExecStart=/usr/local/hellospring/hellospring-0.0.1-SNAPSHOT.jar
+ExecStart=/usr/local/TencentKona-8.0.8-312/bin/java -jar /usr/local/hellospring/hellospring-0.0.1-SNAPSHOT.jar
 ExecStop=/bin/kill -s QUIT $MAINPID
 
 [Install]
